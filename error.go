@@ -28,8 +28,3 @@ func SafeGo(f func()) {
 		f()
 	}()
 }
-
-//
-//func NewHttpError(mst string, statusCode int, args ...any) error {
-//	return nil
-//}
