@@ -89,3 +89,12 @@ func (r *Config) GetBool(name string) bool {
 	ret := r.orgConf.GetBoolean(name)
 	return ret
 }
+
+//func (r *Config) GetArrayConfigObject(name string) *[]Config {
+//
+//	defer RecoverPanic()
+//	//arr := r.orgConf.GetArray(name)
+//
+//	//var retArr *[]Config
+//	return nil
+//}
