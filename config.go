@@ -90,11 +90,31 @@ func (r *Config) GetBool(name string) bool {
 	return ret
 }
 
-//func (r *Config) GetArrayConfigObject(name string) *[]Config {
-//
-//	defer RecoverPanic()
-//	//arr := r.orgConf.GetArray(name)
-//
-//	//var retArr *[]Config
-//	return nil
-//}
+func (r *Config) GetArrayConfigObject(name string) []Config {
+
+	defer RecoverPanic()
+	arr := r.orgConf.GetArray(name)
+	if arr == nil {
+		return nil
+	}
+
+	var retArr []Config
+
+	for _, v := range arr {
+		elm, ok := v.(hocon.Object)
+		if ok == true {
+			convObj := elm.ToConfig()
+			if convObj != nil {
+				newCfg := Config{
+					orgConf: convObj,
+				}
+				retArr = append(retArr, newCfg)
+			}
+		}
+	}
+
+	if len(retArr) <= 0 {
+		return nil
+	}
+	return retArr
+}
