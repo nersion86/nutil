@@ -3,6 +3,7 @@ package nutil
 import (
 	"bytes"
 	"encoding/json"
+	"strconv"
 	"time"
 )
 
@@ -36,4 +37,22 @@ func JSONPretty(v any) (string, error) {
 	}
 
 	return newBuffer.String(), nil
+}
+
+func ConvTimeToUnixMilliString(t time.Time) string {
+
+	milli := t.UnixMilli()
+	convStr := strconv.FormatInt(milli, 10)
+
+	return convStr
+}
+
+func ConvTimeZone(t time.Time, dstLocationName string) (time.Time, error) {
+	loc, err := time.LoadLocation(dstLocationName)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	convTime := t.In(loc)
+	return convTime, nil
 }
